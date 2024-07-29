@@ -6,16 +6,14 @@ import { Web3 } from "web3";
 const web3 = new Web3('https://eth.llamarpc.com');
 
 function App() {
-  const [blockNumber, setBlockNumber] = useState();
-  const [chainId, setChainId] = useState();
+  const [block, setBlock] = useState();
 
   useEffect(() => {
     async function getBlockData () {
-      setBlockNumber(await web3.eth.getBlockNumber());
-      setChainId(await web3.eth.getChainId());
+      setBlock(await web3.eth.getBlock());
     };
 
-    if (!blockNumber || !chainId) {
+    if (!block) {
       getBlockData();
     }
   }, []);
@@ -25,11 +23,15 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         {
-          blockNumber && chainId ?
-          <p>
-            The block number is {blockNumber.toString()}.
-            The chainId is {chainId.toString()}.
-          </p>
+          block ?
+          <l>
+            <li>Number - {block.number.toString()}.</li>
+            <li>Timestamp - {block.timestamp.toString()}</li>
+            <li>Size - {block.size.toString()}</li>
+            <li>Gas Limit - {block.gasLimit.toString()}</li>
+            <li>Hash - {block.hash}</li>
+            <li>Nonce - {block.nonce.toString()}</li>
+          </l>
           :
           null
         }
