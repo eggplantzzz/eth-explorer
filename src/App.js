@@ -11,11 +11,18 @@ function App() {
   useEffect(() => {
     async function getBlockData () {
       try {
-        const response = await axios.get("http://localhost:3001");
+        const blockData = await web3.eth.getBlock();
+        setBlock(blockData);
+        const response = await axios({
+          method: "post",
+          url: "http://localhost:3001/block",
+          data: {
+            number: blockData.number.toString()
+          }
+        });
         console.log("the response from the server is -- %o", response);
-        setBlock(await web3.eth.getBlock());
       } catch (error) {
-        console.log("there was an error while fetching data -- %o", error);
+        console.log("there was an error while posting data -- %o", error);
       }
     };
 
