@@ -9,7 +9,7 @@ function App() {
   const [block, setBlock] = useState();
 
   useEffect(() => {
-    async function getBlockData () {
+    async function getLatestBlockData () {
       try {
         const blockData = await web3.eth.getBlock();
         setBlock(blockData);
@@ -27,7 +27,7 @@ function App() {
     };
 
     if (!block) {
-      getBlockData();
+      getLatestBlockData();
     }
   }, [block]);
 
