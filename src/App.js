@@ -5,7 +5,7 @@ import axios from "axios";
 function App() {
   const [block, setBlock] = useState();
 
-  async function getLatestBlockData () {
+  async function getAndSetLatestBlockData () {
     try {
       const response = await axios({
         method: "get",
@@ -20,8 +20,11 @@ function App() {
   };
 
   useEffect(() => {
-    if (!block) getLatestBlockData();
+    if (!block) getAndSetLatestBlockData();
   }, [block]);
+
+  // periodically update the latest block data
+  setInterval(() => getAndSetLatestBlockData(), 15000);
 
   return (
     <div className="App">
@@ -30,7 +33,7 @@ function App() {
         {
           block ?
           <div className="latest-block-details">
-            <div>Number - {block.number.toString()}.</div>
+            <div>Number - {block.number.toString()}</div>
             <div>Timestamp - {block.timestamp.toString()}</div>
             <div>Size - {block.size.toString()}</div>
             <div>Gas Limit - {block.gasLimit.toString()}</div>
