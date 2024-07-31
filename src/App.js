@@ -28,6 +28,7 @@ function App() {
   return (
     <div className="App">
       <header className="latest-block">
+        <h1>Latest Block Details</h1>
         {
           block ?
           <div className="latest-block-details">
