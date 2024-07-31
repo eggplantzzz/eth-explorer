@@ -1,9 +1,6 @@
 import "./App.css";
 import { useEffect, useState } from "react"
-import { Web3 } from "web3";
 import axios from "axios";
-
-const web3 = new Web3("https://eth.llamarpc.com");
 
 function App() {
   const [block, setBlock] = useState();
@@ -11,15 +8,13 @@ function App() {
   useEffect(() => {
     async function getLatestBlockData () {
       try {
-        const blockData = await web3.eth.getBlock();
-        setBlock(blockData);
         const response = await axios({
-          method: "post",
-          url: "http://localhost:3001/block",
-          data: {
-            number: blockData.number.toString()
-          }
+          method: "get",
+          url: "http://localhost:3001/latestblock"
         });
+        const blockData = response.data;
+        console.log("the body -- %o", blockData);
+        setBlock(blockData);
         console.log("the response from the server is -- %o", response);
       } catch (error) {
         console.log("there was an error while posting data -- %o", error);
