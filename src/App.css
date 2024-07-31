@@ -13,7 +13,7 @@
   }
 }
 
-.App-header {
+.latest-block {
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
@@ -23,6 +23,14 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
+
+.latest-block-details {
+  text-align: left;
+  border: 1px solid white;
+  border-radius: 20px;
+  padding: 15px;
+}
+
 
 .App-link {
   color: #61dafb;

@@ -13,7 +13,6 @@ function App() {
           url: "http://localhost:3001/latestblock"
         });
         const blockData = response.data;
-        console.log("the body -- %o", blockData);
         setBlock(blockData);
         console.log("the response from the server is -- %o", response);
       } catch (error) {
@@ -28,21 +27,23 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
+      <header className="latest-block">
         {
           block ?
-          <ul>
-            <li>Number - {block.number.toString()}.</li>
-            <li>Timestamp - {block.timestamp.toString()}</li>
-            <li>Size - {block.size.toString()}</li>
-            <li>Gas Limit - {block.gasLimit.toString()}</li>
-            <li>Hash - {block.hash}</li>
-            <li>Nonce - {block.nonce.toString()}</li>
-          </ul>
+          <div className="latest-block-details">
+            <div>Number - {block.number.toString()}.</div>
+            <div>Timestamp - {block.timestamp.toString()}</div>
+            <div>Size - {block.size.toString()}</div>
+            <div>Gas Limit - {block.gasLimit.toString()}</div>
+            <div>Hash - {block.hash}</div>
+            <div>Nonce - {block.nonce.toString()}</div>
+          </div>
           :
           null
         }
       </header>
+      <div className="block-list">
+      </div>
     </div>
   );
 }
