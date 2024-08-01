@@ -32,17 +32,14 @@ app.get("/latestblock", async (req, res) => {
   res.json(formattedBlockData);
 });
 
-app.post("/block", (req, res) => {
-  if (!db.has(req.body)) {
-    console.log("adding new block data");
-    db.set(req.body.number, req.body.number);
-  }
-  res.send("Hello World from the post route!")
-});
-
 app.get("/blocks", (req, res) => {
   const allBlocks = db.JSON();
   res.json(allBlocks);
+});
+
+app.delete("/blocks", (req, res) => {
+  db.JSON({});
+  res.send();
 });
 
 app.listen(port, () => {
