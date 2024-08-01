@@ -35,7 +35,7 @@ function App() {
     }
   }
 
-  function formatAllKnownBlocks (blocks) {
+  function getAllKnownBlocks (blocks) {
     let components = [];
     console.log("the blocks coming in -- %o", blocks);
     for (const blockNumber in blocks) {
@@ -79,17 +79,20 @@ function App() {
             :
             null
         }
+        <div className="buttons-container">
+          <div className="fetch-all-blocks-button" onClick={() => getAndSetAllKnownBlocks()}>
+            Fetch All Blocks From DB
+          </div>
+          <div className="delete-all-blocks-button">
+            Delete All Blocks From DB
+          </div>
+        </div>
       </header>
-      <div className="fetch-all-blocks-button" onClick={() => getAndSetAllKnownBlocks()}>
-        Fetch All Blocks From DB
-      </div>
       {
         allKnownBlocks ?
         <div className="block-list">
           <h1>All Known Blocks</h1>
-          {
-            formatAllKnownBlocks(allKnownBlocks)
-          }
+          { getAllKnownBlocks(allKnownBlocks) }
         </div>
         :
         null
