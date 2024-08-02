@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require("express");
 const app = express();
 const cors = require("cors");
@@ -5,8 +6,9 @@ const JSONdb = require("simple-json-db");
 const { Web3 } = require("web3");
 const db = new JSONdb("./db.json");
 
-const port = 3001;
-const web3 = new Web3("https://eth.llamarpc.com");
+const PORT = 3001;
+const { INFURA_API_KEY } = process.env;
+const web3 = new Web3(`https://mainnet.infura.io/v3/${INFURA_API_KEY}`);
 
 // this package is used to enable CORS "stuff"
 // setting the headers manually didn't seem to be enough
@@ -42,6 +44,6 @@ app.delete("/blocks", (req, res) => {
   res.send();
 });
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+app.listen(PORT, () => {
+  console.log(`App listening on port ${PORT}.`);
 });

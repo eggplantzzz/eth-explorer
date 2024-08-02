@@ -1,70 +1,53 @@
-# Getting Started with Create React App
+# Recent Block Explorer
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a simple project designed to provide basic information for the most recent blocks on the Ethereum blockchain.
+To run the application, continue with this README.
 
-## Available Scripts
+## Clone the repo
 
-In the project directory, you can run:
+Firstly, you will need to clone the repo. Navigate to a suitable directory for copying the project data
+and type the following:
+```
+  git clone git@github.com/eggplantzzz/eth-explorer.git
+```
 
-### `npm start`
+This will copy the project files to your local machine. Afterwards, navigate into the directory by entering
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+```
+cd ./eth-explorer
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Once inside the main project directory, install the dependencies for the project using `npm i`. This will install all the
+dependencies necessary for running the app.
 
-### `npm test`
+## Set up your secrets file
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+To run the app, you will need an Infura key. This README assumes you already have an
+Infura key that will allow you to access their API's.
 
-### `npm run build`
+In the root directory for this project, create a file called `.env`. Inside this file, include your Infura API key in the following format:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
+  INFURA_KEY="MY_INFURA_KEY"
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Everything inside the "" should be your unique Infura API key.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+After you install the dependencies and create `.env`, you will be able to run the application.
 
-### `npm run eject`
+## Running the application
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+First, start the back-end server. Open a new terminal window, navigate to the project directory, and enter
+`npm run start:server`. You should eventually see a message stating `App listening on port 3001`. Next you will have to
+start the front end server.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+With the back end server running, open a new terminal window. Once again, navigate to the project directory and enter
+`npm run start:ui`. You should see the server for the front end initialize.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+After both servers have started, you can open a browser window and navigate to "http://localhost:3000". This will bring
+you to the app and display information for the latest block information that has just been fetched. You should see the
+block number, the hash, and the size among other parameters.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+The application is simple and will fetch new block information every 30 seconds. You will see the latest block information update in the UI. It will store information for each
+block as it fetches it and store it in the database. There are buttons for deleting all blocks stored in the database as well
+as a button for displaying information for all of the blocks the application knows about. Enjoy!
