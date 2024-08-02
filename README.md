@@ -28,7 +28,7 @@ Infura key that will allow you to access their API's.
 In the root directory for this project, create a file called `.env`. Inside this file, include your Infura API key in the following format:
 
 ```
-  INFURA_KEY="MY_INFURA_KEY"
+  INFURA_API_KEY="MY_INFURA_KEY"
 ```
 
 Everything inside the "" should be your unique Infura API key.
