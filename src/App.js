@@ -6,6 +6,7 @@ import axios from "axios";
 function App() {
   const [latestBlock, setLatestBlock] = useState();
   const [allKnownBlocks, setAllKnownBlocks] = useState({});
+  const [timerSet, setTimerSet] = useState(false);
 
   async function getAndSetLatestBlock () {
     try {
@@ -72,8 +73,14 @@ function App() {
     if (!latestBlock) getAndSetLatestBlock();
   }, [latestBlock]);
 
-  // periodically update the latest block data
-  setInterval(() => getAndSetLatestBlock(), 30000);
+  useEffect(() => {
+    // we only want to create one timer instance
+    if (!timerSet) {
+      // periodically update the latest block data
+      setInterval(() => getAndSetLatestBlock(), 30000);
+      setTimerSet(true);
+    }
+  }, []);
 
   return (
     <div className="App">
