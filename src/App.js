@@ -73,7 +73,7 @@ function App() {
   }, [latestBlock]);
 
   // periodically update the latest block data
-  // setInterval(() => getAndSetLatestBlock(), 15000);
+  setInterval(() => getAndSetLatestBlock(), 30000);
 
   return (
     <div className="App">
