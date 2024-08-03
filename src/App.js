@@ -111,7 +111,7 @@ function App() {
         </div>
       </header>
       {
-        Object.keys(allBlocks).length > 0 ?
+        showAllBlocks ?
         <div className="block-list">
           <h1>All Known Blocks</h1>
           { getAllBlocks(allBlocks) }
