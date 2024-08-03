@@ -24,14 +24,14 @@
   align-items: center;
 }
 
-.fetch-all-blocks-button, .delete-all-blocks-button {
+.toggle-show-all-blocks-button, .delete-all-blocks-button {
   border: 1px solid white;
   border-radius: 20px;
   padding: 15px;
   background-color: green;
 }
 
-.fetch-all-blocks-button:hover, .delete-all-blocks-button:hover {
+.toggle-show-all-blocks-button:hover, .delete-all-blocks-button:hover {
   cursor: pointer;
   background-color: orange;
 }

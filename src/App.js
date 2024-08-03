@@ -5,8 +5,9 @@ import axios from "axios";
 
 function App() {
   const [latestBlock, setLatestBlock] = useState();
-  const [allKnownBlocks, setAllKnownBlocks] = useState({});
-  const [timerSet, setTimerSet] = useState(false);
+  const [allBlocks, setAllBlocks] = useState({});
+  const [showAllBlocks, setShowAllBlocks] = useState(false);
+  const [timerCreated, setTimerCreated] = useState(false);
 
   async function getAndSetLatestBlock () {
     const response = await axios({
@@ -17,13 +18,13 @@ function App() {
     setLatestBlock(block);
   };
 
-  async function getAndSetAllKnownBlocks () {
+  async function getAndSetAllBlocks () {
     const response = await axios({
       method: "get",
       url: "http://localhost:3001/blocks"
     });
     const allBlocks = response.data;
-    setAllKnownBlocks(allBlocks);
+    setAllBlocks(allBlocks);
   }
 
   async function deleteAllBlocks () {
@@ -31,25 +32,41 @@ function App() {
       method: "delete",
       url: "http://localhost:3001/blocks"
     });
-    setAllKnownBlocks({});
+    setAllBlocks({});
   }
 
-  function getAllKnownBlocks (blocks) {
-    let components = [];
-    for (const blockNumber in blocks) {
-      components.push(
-        <BlockDetails
-          key={blocks[blockNumber].number}
-          number={blocks[blockNumber].number}
-          timestamp={blocks[blockNumber].timestamp}
-          size={blocks[blockNumber].size}
-          gasLimit={blocks[blockNumber].gasLimit}
-          hash={blocks[blockNumber].hash}
-          nonce={blocks[blockNumber].nonce}
-        />
-      )
+  async function toggleShowAllBlocks () {
+    if (showAllBlocks) {
+      setShowAllBlocks(false);
+    } else {
+      await getAndSetAllBlocks();
+      setShowAllBlocks(true);
     }
-    return components;
+  }
+
+  function getAllBlocks (blocks) {
+    const reverseSortedBlockNumbers = Object.keys(blocks).toSorted((a, b) => {
+      if (a < b) {
+        return 1;
+      } else if (a > b) {
+        return -1;
+      } else {
+        return 0
+      }
+    });
+    return (
+      reverseSortedBlockNumbers.map(number => {
+        return <BlockDetails
+          key={blocks[number].number}
+          number={blocks[number].number}
+          timestamp={blocks[number].timestamp}
+          size={blocks[number].size}
+          gasLimit={blocks[number].gasLimit}
+          hash={blocks[number].hash}
+          nonce={blocks[number].nonce}
+        />
+      })
+    );
   }
 
   useEffect(() => {
@@ -58,17 +75,14 @@ function App() {
 
   useEffect(() => {
     // we ensure only one timer instance gets created
-    if (!timerSet) {
+    if (!timerCreated) {
       setInterval(() => {
         getAndSetLatestBlock();
-        // update the list only if the client has already fetched all the data
-        if (Object.keys(allKnownBlocks).length > 0) {
-          getAndSetAllKnownBlocks();
-        }
+        getAndSetAllBlocks();
       }, 15000);
-      setTimerSet(true);
+      setTimerCreated(true);
     }
-  }, []);
+  }, [showAllBlocks]);
 
   return (
     <div className="App">
@@ -88,19 +102,19 @@ function App() {
             null
         }
         <div className="buttons-container">
-          <div className="fetch-all-blocks-button" onClick={() => getAndSetAllKnownBlocks()}>
-            Fetch All Blocks From DB
+          <div className="toggle-show-all-blocks-button" onClick={() => toggleShowAllBlocks()}>
+            { showAllBlocks ? "Hide" : "Show" } All Blocks From DB
           </div>
           <div className="delete-all-blocks-button" onClick={() => deleteAllBlocks()}>
-            Delete All Blocks From DB
+            Delete All Blocks In DB
           </div>
         </div>
       </header>
       {
-        Object.keys(allKnownBlocks).length > 0 ?
+        Object.keys(allBlocks).length > 0 ?
         <div className="block-list">
           <h1>All Known Blocks</h1>
-          { getAllKnownBlocks(allKnownBlocks) }
+          { getAllBlocks(allBlocks) }
         </div>
         :
         null
