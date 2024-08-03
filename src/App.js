@@ -9,51 +9,34 @@ function App() {
   const [timerSet, setTimerSet] = useState(false);
 
   async function getAndSetLatestBlock () {
-    try {
-      const response = await axios({
-        method: "get",
-        url: "http://localhost:3001/latestblock"
-      });
-      const block = response.data;
-      setLatestBlock(block);
-      console.log("the response from the server is -- %o", response);
-    } catch (error) {
-      console.log("there was an error while posting data -- %o", error);
-    }
+    const response = await axios({
+      method: "get",
+      url: "http://localhost:3001/latestblock"
+    });
+    const block = response.data;
+    setLatestBlock(block);
   };
 
   async function getAndSetAllKnownBlocks () {
-    try {
-      const response = await axios({
-        method: "get",
-        url: "http://localhost:3001/blocks"
-      });
-      const allBlocks = response.data;
-      setAllKnownBlocks(allBlocks);
-      console.log("the response from the server is -- %o", response);
-    } catch (error) {
-      console.log("there was an error while posting data -- %o", error);
-    }
+    const response = await axios({
+      method: "get",
+      url: "http://localhost:3001/blocks"
+    });
+    const allBlocks = response.data;
+    setAllKnownBlocks(allBlocks);
   }
 
   async function deleteAllBlocks () {
-    try {
-      const response = await axios({
-        method: "delete",
-        url: "http://localhost:3001/blocks"
-      });
-      setAllKnownBlocks({});
-      console.log("the response from the server is -- %o", response);
-    } catch (error) {
-      console.log("there was an error while posting data -- %o", error);
-    }
+    const response = await axios({
+      method: "delete",
+      url: "http://localhost:3001/blocks"
+    });
+    setAllKnownBlocks({});
   }
 
   function getAllKnownBlocks (blocks) {
     let components = [];
-    console.log("the blocks coming in -- %o", blocks);
     for (const blockNumber in blocks) {
-      console.log("the block -- %o", blockNumber);
       components.push(
         <BlockDetails
           key={blocks[blockNumber].number}
@@ -74,10 +57,15 @@ function App() {
   }, [latestBlock]);
 
   useEffect(() => {
-    // we only want to create one timer instance
+    // we ensure only one timer instance gets created
     if (!timerSet) {
-      // periodically update the latest block data
-      setInterval(() => getAndSetLatestBlock(), 30000);
+      setInterval(() => {
+        getAndSetLatestBlock();
+        // update the list only if the client has already fetched all the data
+        if (Object.keys(allKnownBlocks).length > 0) {
+          getAndSetAllKnownBlocks();
+        }
+      }, 15000);
       setTimerSet(true);
     }
   }, []);

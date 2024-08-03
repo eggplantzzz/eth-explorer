@@ -28,7 +28,7 @@ app.get("/latestblock", async (req, res) => {
     nonce: nonce.toString()
   }
   if (!db.has(number.toString())) {
-    console.log("adding new block data");
+    console.log("Adding a new block to the database.");
     db.set(number.toString(), formattedBlockData);
   }
   res.json(formattedBlockData);
