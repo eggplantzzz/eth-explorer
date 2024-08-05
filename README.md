@@ -51,3 +51,9 @@ block number, the hash, and the size among other parameters.
 The application is simple and will fetch new block information every 30 seconds. You will see the latest block information update in the UI. It will store information for each
 block as it fetches it and store it in the database. There are buttons for deleting all blocks stored in the database as well
 as a button for displaying information for all of the blocks the application knows about. Enjoy!
+
+## About the application
+
+This app was built using create-react-app to quickly get a UI up and running. There is an Express server running on the backend which handles the API requests to Infura and
+access to the database. And for the sake of simplicity, a small npm package is used called simple-json-db which provides a JSON-style database for the application to store
+block data.
