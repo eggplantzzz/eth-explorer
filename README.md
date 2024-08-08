@@ -57,3 +57,10 @@ as a button for displaying information for all of the blocks the application kno
 This app was built using create-react-app to quickly get a UI up and running. There is an Express server running on the backend which handles the API requests to Infura and
 access to the database. And for the sake of simplicity, a small npm package is used called simple-json-db which provides a JSON-style database for the application to store
 block data.
+
+## Followup work for the application
+
+- create robust error handling for the application
+- extract utility functions from the main `App` component
+- optimize db access in the application as it is probably accessed too often
+- create an adapter for the http functionality?
